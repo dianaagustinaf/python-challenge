@@ -3,8 +3,8 @@ import csv
 
 #------------------READ CSV-----------------------------   
 
-csvpath = os.path.join('PyPoll', 'Resources', 'election_data.csv')
-analysispath = os.path.join('PyPoll', 'analysis', 'analysis_poll.txt') 
+csvpath = os.path.join('Resources', 'election_data.csv')
+analysispath = os.path.join('analysis', 'analysis_poll.txt') 
 
 # The dataset is composed of three columns: "Voter ID", "County", and "Candidate". 
 id = []
@@ -41,76 +41,47 @@ def poll_analysis(filepath, id, county, candidates):
 
 # The total number of votes cast
 
-    analysis.write("\n Total Votes: " + str(len(id)))
+    total_votes = len(id)
+    analysis.write("\n Total Votes: " + str(total_votes))
     analysis.write("\n----------------------------")
 
 
-# A complete list of candidates who received votes
-
-    unique_candidates = []                 # do dict
-    votes = []
-    index = 0
-
-    unique_candidates.append(candidates[0])
-    votes.append(0)
-    print(len(unique_candidates))
-    print(votes)
-
-    for candidate in candidates:
-        find = False
-        
-        while not find or index < len(unique_candidates):
-            
-            if candidate == unique_candidates[index]:
-                
-                find = True
-                votes[index] += 1 
-            else:
-                index+=1
-        
-        if not find:
-            unique_candidates.append(candidate)
-            votes[len(unique_candidates)-1] = 1
-    
-    analysis.write("\n candidates: {unique_candidates} and votes: {votes}")
-            
-
+# A complete list of candidates who received votes,
+# The total number of votes each candidate won and
 # The percentage of votes each candidate won
 
+    unique_candidates = {}
 
+    for candidate in candidates:
+        
+        if candidate not in unique_candidates.keys():
+            unique_candidates[candidate] = 1
+        else:
+            unique_candidates[candidate] +=1
 
-# The total number of votes each candidate won
+    for candidate, votes in zip(unique_candidates.keys(), unique_candidates.values()):
 
-
-
-
-# Charles Casper Stockham: 23.049% (85213)
-# Diana DeGette: 73.812% (272892)
-# Raymon Anthony Doane: 3.139% (11606)
-# -------------------------
+        votes_percent = percent(total_votes,votes,3)
+    
+        analysis.write("\n " + candidate + ": " + str(votes_percent) + "% (" + str(votes) + ")")
+            
+    analysis.write("\n----------------------------")
 
 
 # The winner of the election based on popular vote.
 
 # Winner: Diana DeGette
-# -------------------------
 
-
-
+    analysis.write("\n----------------------------")
 
     analysis.close()
+    
 
 #------------------FUNCTIONS-----------------------------   
 
-def sum(nums):
-    count= 0
-    for i in nums:
-        count=count+i
-    return count
-
-def average(nums):
-    num = sum(nums)/len(nums) 
-    return(round(num,2))
+def percent(total,partial,decimals):
+    result = (partial * 100) / total
+    return round(result,decimals)
     
 
 #------------------RESULT-----------------------------   
@@ -121,7 +92,6 @@ poll_analysis(analysispath, id, county, candidates)
 
 results = open(analysispath, "r")
 print(results.read())
-
 
 
 # Election Results
