@@ -2,9 +2,10 @@ import os
 import csv
 
 #------------------READ CSV-----------------------------   
+#Runned with GitBash
 
-csvpath = os.path.join('PyBank', 'Resources', 'budget_data.csv')
-analysispath = os.path.join('PyBank', 'analysis', 'analysis_bank.txt') 
+csvpath = os.path.join('Resources', 'budget_data.csv')
+analysispath = os.path.join('analysis', 'analysis_bank.txt') 
 
 dates = []
 profit_losses = []
@@ -117,3 +118,8 @@ print(results.read())
 # Average Change: $-8311.11
 # Greatest Increase in Profits: Aug-16 ($1862002)
 # Greatest Decrease in Profits: Feb-14 ($-1825558)
+
+
+# Disclaimer: this file was run with Git Bash. 
+# From the VS Code terminal it needs another path.
+# (add PyBank folder)
