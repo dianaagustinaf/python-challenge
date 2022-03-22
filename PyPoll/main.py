@@ -3,6 +3,7 @@ import csv
 
 #------------------READ CSV-----------------------------   
 
+#Runned with GitBash 
 csvpath = os.path.join('Resources', 'election_data.csv')
 analysispath = os.path.join('analysis', 'analysis_poll.txt') 
 
@@ -70,12 +71,17 @@ def poll_analysis(filepath, id, county, candidates):
 
 # The winner of the election based on popular vote.
 
-# Winner: Diana DeGette
+    max_votes = max(unique_candidates.values())
+
+    winner = [key for key, value in unique_candidates.items() if value == max_votes]
+    
+    
+    analysis.write("\n Winner: " + winner[0])
 
     analysis.write("\n----------------------------")
 
     analysis.close()
-    
+
 
 #------------------FUNCTIONS-----------------------------   
 
@@ -104,5 +110,4 @@ print(results.read())
 # -------------------------
 # Winner: Diana DeGette
 # -------------------------
-
 
